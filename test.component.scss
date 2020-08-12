@@ -1,0 +1,29 @@
+.gadjet-container {
+    border: 1px solid rgba(0,0,0,1.0);
+    position: relative;
+}
+
+.drag-area {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(200, 0,0,1.0);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 100px;
+    grid-template-rows: 100px;
+}
+
+.hoge {
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+}
+
+.moge {
+    grid-row: 2 / 3;
+    grid-column: 3 / 4;
+}
