@@ -7,7 +7,7 @@
     *ngFor="let gadjet of gadjetList"
     [colspan]="gadjet.cols"
     [rowspan]="gadjet.rows"
-    [style]="gadjet.style">
+    [class]="gadjet.flag ? 'gadjet on-drag' : 'gadjet'">
     <div [id]="gadjet.id" class="drag-area"></div>
     {{ gadjet.text }}
     </mat-grid-tile>

@@ -21,39 +21,36 @@ export class TestComponent implements OnInit, OnDestroy {
   public gadjetList = [
     {
       text: 'hoge',
-      cols: 3,
-      rows: 1,
+      cols: 30,
+      rows: 3,
       id: 'hoge',
       flag: false,
-      height: undefined,
-      width: undefined,
+      thresholdX: undefined,
+      thresholdY: undefined,
       clientX: undefined,
-      clientY: undefined,
-      style: 'background-color: blue'
+      clientY: undefined
     },
     {
       text: 'moge',
-      cols: 2,
-      rows: 2,
+      cols: 20,
+      rows: 3,
       id: 'moge',
       flag: false,
-      height: undefined,
-      width: undefined,
+      thresholdX: undefined,
+      thresholdY: undefined,
       clientX: undefined,
-      clientY: undefined,
-      style: 'background-color: green'
+      clientY: undefined
     },
     {
       text: 'fuga',
-      cols: 5,
+      cols: 50,
       rows: 1,
       id: 'fuge',
       flag: false,
-      height: undefined,
-      width: undefined,
+      thresholdX: undefined,
+      thresholdY: undefined,
       clientX: undefined,
-      clientY: undefined,
-      style: 'background-color: red'
+      clientY: undefined
     }
   ];
 
@@ -63,13 +60,7 @@ export class TestComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {}
 
-  hogeEvent($event) {
-    // console.log($event);
-  }
-
   private _setGadjetParam(gadjet, selector) {
-    gadjet.height = selector.parentNode.offsetHeight;
-    gadjet.width = selector.parentNode.offsetWidth;
     gadjet.clientX = selector.getBoundingClientRect().right;
     gadjet.clientY = selector.getBoundingClientRect().bottom;
   }
@@ -82,6 +73,8 @@ export class TestComponent implements OnInit, OnDestroy {
       const dragAreaSelector = this.elementRef.nativeElement.querySelector(`#${gadjet.id}`);
       if (dragAreaSelector.contains(event.target)) {
         gadjet.flag = true;
+        gadjet.thresholdX = (dragAreaSelector.parentNode.offsetWidth / gadjet.cols) * 0.9;
+        gadjet.thresholdY = (dragAreaSelector.parentNode.offsetHeight / gadjet.rows) * 0.9;
         this._setGadjetParam(gadjet, dragAreaSelector);
       }
     });
@@ -94,31 +87,25 @@ export class TestComponent implements OnInit, OnDestroy {
     this.gadjetList.forEach(gadjet => {
       if (gadjet.flag) {
         const dragAreaSelector = this.elementRef.nativeElement.querySelector(`#${gadjet.id}`);
-        const thresholdX = (gadjet.width / gadjet.cols) * 0.9;
-        const thresholdY = gadjet.height / gadjet.rows;
         this._setGadjetParam(gadjet, dragAreaSelector);
 
-        // console.log('********************************');
-        // console.log(gadjet.clientX);
-        // console.log(gadjet.width);
-        // console.log(gadjet.cols);
-        // console.log(thresholdX);
-        // console.log(event.clientX);
-
-        // 横の拡張
-        if (gadjet.clientX < event.clientX && (event.clientX - gadjet.clientX) > thresholdX) {
+        // 横の拡大
+        if (gadjet.clientX < event.clientX && (event.clientX - gadjet.clientX) > gadjet.thresholdX) {
           if (gadjet.cols < this.cols) {
-            console.log('==================');
             gadjet.cols++;
           }
-        } else if (gadjet.clientX > event.clientX && (gadjet.clientX - event.clientX) > thresholdX) {
+        // 横の縮小
+        } else if (gadjet.clientX > event.clientX && (gadjet.clientX - event.clientX) > gadjet.thresholdX) {
           if (gadjet.cols > 1) {
             gadjet.cols--;
           }
         }
-        if (gadjet.clientY < event.clientY && (event.clientY - gadjet.clientY) > thresholdY) {
+
+        // 縦の拡大
+        if (gadjet.clientY < event.clientY && (event.clientY - gadjet.clientY) > gadjet.thresholdY) {
           gadjet.rows++;
-        } else if (gadjet.clientY > event.clientY && (gadjet.clientY - event.clientY) > thresholdY) {
+        // 縦の縮小
+        } else if (gadjet.clientY > event.clientY && (gadjet.clientY - event.clientY) > gadjet.thresholdY) {
           if (gadjet.rows > 1) {
             gadjet.rows--;
           }
@@ -136,19 +123,5 @@ export class TestComponent implements OnInit, OnDestroy {
       gadjet.flag = false;
     });
   }
-
-  // @HostListener('document:drop', ['$event'])
-  // onDropHtmlElement(event: MouseEvent, targetElement: HTMLElement) {
-  //   const dragAreaSelector = this.elementRef.nativeElement.querySelector('#drag-area');
-
-  //   if (dragAreaSelector.contains(event.target)) {
-  //     console.log(event);
-  //     console.log('drop');
-  //   } else {
-  //     console.log('drop');
-  //   }
-  // }
-
-
 
 }
