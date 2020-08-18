@@ -5,6 +5,7 @@
 
 
 .drag-area {
+    z-index: 99999999;
     cursor: nwse-resize;
     position: absolute;
     bottom: 1px;

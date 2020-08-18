@@ -1,7 +1,3 @@
-<!--<div class="gadjet-container" [style]="style">
-
-</div>-->
-
 <mat-grid-list [cols]="cols" [rowHeight]="rowHeight">
     <mat-grid-tile
     *ngFor="let gadjet of gadjetList"
@@ -9,10 +5,8 @@
     [rowspan]="gadjet.rows"
     [class]="gadjet.flag ? 'gadjet on-drag' : 'gadjet'">
     <div [id]="gadjet.id" class="drag-area"></div>
-    {{ gadjet.text }}
+    <ng-container [ngComponentOutlet]="gadjet.component"></ng-container>
     </mat-grid-tile>
 </mat-grid-list>
 
-<!--<div (mousedown)="hogeEvent($event)" (mousemove)="hogeEvent($event)">
-    Event Hoge
-</div>-->
+<!--<app-ag-grid-sample></app-ag-grid-sample>-->

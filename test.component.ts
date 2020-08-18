@@ -4,6 +4,7 @@ import { forkJoin, zip, merge, combineLatest, Subscription, Observable } from 'r
 import { TestService } from './test.service';
 
 import { load as loadHoge, reset as resetHoge } from '../../../store/hoge.action';
+import { AgGridSampleComponent } from '../../ag-grid-sample/ag-grid-sample.component';
 
 @Component({
   selector: 'app-test',
@@ -21,6 +22,7 @@ export class TestComponent implements OnInit, OnDestroy {
   public gadjetList = [
     {
       text: 'hoge',
+      component: AgGridSampleComponent,
       cols: 30,
       rows: 3,
       id: 'hoge',
@@ -32,6 +34,7 @@ export class TestComponent implements OnInit, OnDestroy {
     },
     {
       text: 'moge',
+      component: AgGridSampleComponent,
       cols: 20,
       rows: 3,
       id: 'moge',
@@ -43,6 +46,7 @@ export class TestComponent implements OnInit, OnDestroy {
     },
     {
       text: 'fuga',
+      component: AgGridSampleComponent,
       cols: 50,
       rows: 1,
       id: 'fuge',
